@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RoseLink会計手順書</title>
+  <style>
+    :root {
+      --ink: #1f2933;
+      --muted: #627386;
+      --line: #d7dee8;
+      --paper: #f4f6f9;
+      --white: #ffffff;
+
+      /* 画面(アプリ)ごとのテーマカラー */
+      --airregi: #2f67b1;
+      --airregi-soft: #e7f0ff;
+      --roselink: #c44d75;
+      --roselink-soft: #fde8ef;
+      --customer: #007f7a;
+      --customer-soft: #dff6f3;
+
+      --amber: #a86500;
+      --amber-soft: #fff0d6;
+      --danger: #b03232;
+      --danger-soft: #ffe6e6;
+      --ok: #1d7a4f;
+      --ok-soft: #e2f5ea;
+
+      --radius: 14px;
+      --shadow: 0 8px 24px rgba(31, 41, 51, 0.07);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      line-height: 1.8;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 16px 14px 64px;
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.4; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 16px; }
+    p { margin: 0; }
+
+    /* ---------- ヘッダー ---------- */
+    header {
+      padding: 22px 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      color: var(--roselink);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .lead {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* ---------- 目次(スクロールチップ) ---------- */
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      margin: 12px -14px 0;
+      padding: 10px 14px;
+      background: rgba(244, 246, 249, 0.95);
+      backdrop-filter: blur(6px);
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .toc::-webkit-scrollbar { display: none; }
+
+    .toc a {
+      flex: 0 0 auto;
+      padding: 7px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* ---------- セクション共通 ---------- */
+    section {
+      margin-top: 20px;
+      padding: 20px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+      scroll-margin-top: 64px;
+    }
+
+    .section-sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ---------- 使う画面(凡例) ---------- */
+    .screens {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .screen-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+    }
+
+    .screen-card .dot {
+      flex: 0 0 auto;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+
+    .screen-card strong { font-size: 15px; display: block; }
+    .screen-card small { color: var(--muted); font-size: 12px; line-height: 1.5; display: block; }
+
+    .screen-airregi { background: var(--airregi-soft); }
+    .screen-airregi .dot { background: var(--airregi); }
+    .screen-roselink { background: var(--roselink-soft); }
+    .screen-roselink .dot { background: var(--roselink); }
+    .screen-customer { background: var(--customer-soft); }
+    .screen-customer .dot { background: var(--customer); }
+
+    /* ---------- 画面バッジ(共通部品) ---------- */
+    .app-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .app-badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+    }
+    .badge-airregi { background: var(--airregi); }
+    .badge-roselink { background: var(--roselink); }
+    .badge-customer { background: var(--customer); }
+
+    /* ---------- 全体の流れ(タイムライン) ---------- */
+    .timeline {
+      margin-top: 16px;
+      display: grid;
+      gap: 0;
+    }
+
+    .tl-item {
+      position: relative;
+      padding: 0 0 4px 34px;
+    }
+
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 6px;
+      bottom: -6px;
+      width: 3px;
+      background: var(--line);
+    }
+    .tl-item:last-child::before { bottom: auto; height: 14px; }
+
+    .tl-item::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 6px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 1px var(--line);
+    }
+    .tl-airregi::after { background: var(--airregi); }
+    .tl-roselink::after { background: var(--roselink); }
+    .tl-customer::after { background: var(--customer); }
+
+    .tl-item .tl-text {
+      font-size: 14px;
+      font-weight: 700;
+      padding-bottom: 10px;
+    }
+    .tl-item .app-badge { margin-bottom: 2px; }
+
+    /* ---------- 注意ボックス ---------- */
+    .notice {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-left: 5px solid var(--amber);
+      border-radius: 6px;
+      background: var(--amber-soft);
+      color: #4b3a1e;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .notice.ok {
+      border-left-color: var(--ok);
+      background: var(--ok-soft);
+      color: #14502f;
+    }
+    .notice.danger {
+      border-left-color: var(--danger);
+      background: var(--danger-soft);
+      color: #5b1d1d;
+    }
+
+    /* ---------- 詳細手順 ---------- */
+    .flow {
+      display: grid;
+      gap: 0;
+      margin-top: 16px;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fbfcfe;
+    }
+
+    .step-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+    }
+    .step-airregi .step-head { background: var(--airregi-soft); }
+    .step-roselink .step-head { background: var(--roselink-soft); }
+    .step-customer .step-head { background: var(--customer-soft); }
+
+    .step-num {
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      color: var(--white);
+      font-weight: 900;
+      font-size: 16px;
+    }
+    .step-airregi .step-num { background: var(--airregi); }
+    .step-roselink .step-num { background: var(--roselink); }
+    .step-customer .step-num { background: var(--customer); }
+
+    .step-head .head-text { min-width: 0; }
+    .step-head .app-badge { margin-bottom: 2px; }
+    .step-head h3 { font-size: 16px; }
+
+    .step-body {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .step-body ul {
+      margin: 0;
+      padding-left: 1.3em;
+    }
+    .step-body li { margin: 6px 0; font-size: 14px; }
+
+    .point {
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: var(--amber-soft);
+      color: #4b3a1e;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .shot {
+      display: grid;
+      place-items: center;
+      min-height: 130px;
+      margin: 0;
+      padding: 14px;
+      border: 2px dashed #b9c5d4;
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 520px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #ffffff;
+    }
+    .shot figcaption,
+    .shot small {
+      display: block;
+      margin-top: 6px;
+      color: #7b8998;
+      font-weight: 600;
+      text-align: center;
+    }
+    .shot-gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .shot-gallery .shot {
+      min-height: 0;
+      padding: 10px;
+    }
+
+    @media (min-width: 700px) {
+      .shot-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* 画面切り替えの区切り */
+    .switch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 4px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      flex-wrap: wrap;
+    }
+    .switch .arrow {
+      font-size: 16px;
+      line-height: 1;
+    }
+    .switch .app-badge { font-size: 11px; padding: 2px 9px; }
+
+    /* ---------- 金額表示 ---------- */
+    .cases {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .case {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fbfcfe;
+    }
+
+    .case-head {
+      padding: 10px 14px;
+      background: var(--airregi-soft);
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .case-body { padding: 12px 14px; }
+
+    .money {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .money td {
+      padding: 6px 4px;
+      border-bottom: 1px dashed var(--line);
+    }
+    .money td:last-child {
+      text-align: right;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .money tr.total td {
+      border-bottom: none;
+      border-top: 2px solid var(--ink);
+      font-weight: 900;
+    }
+
+    .case-body ol {
+      margin: 0;
+      padding-left: 1.4em;
+    }
+    .case-body li { margin: 6px 0; font-size: 13.5px; }
+    .case-body .app-badge {
+      font-size: 10.5px;
+      padding: 1px 8px;
+      vertical-align: 1px;
+      margin-right: 4px;
+    }
+
+    /* ---------- チェックリスト ---------- */
+    .check-list {
+      list-style: none;
+      margin: 14px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .check-list label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcfe;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .check-list input[type="checkbox"] {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      margin: 3px 0 0;
+      accent-color: var(--ok);
+    }
+    .check-list label:has(input:checked) {
+      background: var(--ok-soft);
+      border-color: var(--ok);
+    }
+
+    /* ---------- 予備カード ---------- */
+    .trouble-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .trouble-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fbfcfe;
+    }
+    .trouble-card .tc-head {
+      padding: 10px 14px;
+      background: #eef3f8;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .trouble-card .tc-body {
+      padding: 12px 14px;
+      display: grid;
+      gap: 8px;
+      font-size: 13.5px;
+    }
+    .tc-row { display: grid; gap: 2px; }
+    .tc-row .tc-label {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .double-check {
+      margin: 12px 0;
+      padding: 14px;
+      border: 2px solid var(--danger);
+      border-radius: 12px;
+      background: var(--danger-soft);
+      color: #5b1d1d;
+    }
+    .double-check h3 {
+      font-size: 16px;
+    }
+
+    /* ---------- 広い画面 ---------- */
+    @media (min-width: 700px) {
+      .page { max-width: 760px; }
+      h1 { font-size: 32px; }
+      .screens { grid-template-columns: repeat(3, 1fr); }
+      .screen-card { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    @media print {
+      body { background: #ffffff; }
+      .page { max-width: none; padding: 0; }
+      .toc { display: none; }
+      header, section, .step, .case, .trouble-card { box-shadow: none; break-inside: avoid; }
+      .shot { min-height: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="eyebrow">店舗iPad用マニュアル</div>
+      <h1>RoseLink会計手順書</h1>
+      <p class="lead">Rose支払いのお会計は、<strong>Airレジ・RoseLink管理ページ・RoseLinkアプリ</strong>の3つの画面を行き来します。今どの画面を操作しているかは、各手順の色バッジで確認できます。<br>ローズ登録の確定は取り消せないため、<strong>確定してもらう前にAirレジへの入力まで済ませて金額を照合</strong>し、現金やカードの受け渡しは確定のあとに行います。</p>
+    </header>
+
+    <nav class="toc">
+      <a href="#screens">使う画面</a>
+      <a href="#overview">全体の流れ</a>
+      <a href="#steps">詳細手順</a>
+    </nav>
+
+    <section id="screens">
+      <h2>使う画面は3つ</h2>
+      <p class="section-sub">この手順書では、操作する画面を色で区別しています。</p>
+      <div class="screens">
+        <div class="screen-card screen-airregi">
+          <span class="dot"></span>
+          <div>
+            <strong>Airレジ</strong>
+            <small>注文入力・支払い処理(店舗iPad)</small>
+          </div>
+        </div>
+        <div class="screen-card screen-roselink">
+          <span class="dot"></span>
+          <div>
+            <strong>RoseLink管理ページ</strong>
+            <small>QRコードの発行(店舗iPad)</small>
+          </div>
+        </div>
+        <div class="screen-card screen-customer">
+          <span class="dot"></span>
+          <div>
+            <strong>RoseLinkアプリ</strong>
+            <small>QR読み取り・Rose利用額の選択</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview">
+      <h2>全体の流れ</h2>
+      <p class="section-sub">7ステップ。色が変わるところで画面をきりかえます。</p>
+      <div class="timeline">
+        <div class="tl-item tl-airregi">
+          <span class="app-badge badge-airregi">Airレジ</span>
+          <div class="tl-text">1. 注文を入力する</div>
+        </div>
+        <div class="tl-item tl-airregi">
+          <span class="app-badge badge-airregi">Airレジ</span>
+          <div class="tl-text">2. 支払いへ進み、合計金額を確認する</div>
+        </div>
+        <div class="tl-item tl-roselink">
+          <span class="app-badge badge-roselink">RoseLink管理ページ</span>
+          <div class="tl-text">3. 合計金額を入力してQRを発行する</div>
+        </div>
+        <div class="tl-item tl-customer">
+          <span class="app-badge badge-customer">RoseLinkアプリ</span>
+          <div class="tl-text">4. QRを読み取り、Rose利用額を入力してもらう<br>(確定はまだ)</div>
+        </div>
+        <div class="tl-item tl-airregi">
+          <span class="app-badge badge-airregi">Airレジ</span>
+          <div class="tl-text">5. Rose利用額と残額を入力し、ダブルチェックする<br>(会計はまだ)</div>
+        </div>
+        <div class="tl-item tl-customer">
+          <span class="app-badge badge-customer">RoseLinkアプリ</span>
+          <div class="tl-text">6. 「支払いを完了しました」にチェックして、ローズ登録を確定してもらう</div>
+        </div>
+        <div class="tl-item tl-airregi">
+          <span class="app-badge badge-airregi">Airレジ</span>
+          <div class="tl-text">7. 現金/カードを受け取り、「会計する」で完了</div>
+        </div>
+      </div>
+      <p class="notice danger">ローズ登録の確定は<strong>取り消せません</strong>。確定してもらうのは、Airレジとの金額照合(手順5)が終わってからです。</p>
+      <p class="notice ok">クレジット併用の場合も、Rose分を差し引いた残額をクレジットで会計して問題ありません。</p>
+    </section>
+
+    <section id="steps">
+      <h2>詳細手順</h2>
+      <div class="flow">
+
+        <article class="step step-airregi">
+          <div class="step-head">
+            <div class="step-num">1</div>
+            <div class="head-text">
+              <span class="app-badge badge-airregi">Airレジ</span>
+              <h3>通常通り注文を入力する</h3>
+            </div>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>注文入力画面で商品を追加します。</li>
+              <li>入力内容に抜けがないか確認します。</li>
+              <li>右側の「支払いへ進む」を押します。</li>
+            </ul>
+            <figure class="shot">
+              <img src="roselink-assets/airregi-order.png" alt="Airレジ 注文入力画面">
+              <figcaption>Airレジ 注文入力画面</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="step step-airregi">
+          <div class="step-head">
+            <div class="step-num">2</div>
+            <div class="head-text">
+              <span class="app-badge badge-airregi">Airレジ</span>
+              <h3>お会計の合計金額を確認する</h3>
+            </div>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>支払い画面で、お会計の<strong>合計金額</strong>を確認します。</li>
+            </ul>
+            <figure class="shot">
+              <img src="roselink-assets/airregi-total-cash-2508.png" alt="Airレジ 支払い画面 合計2508円">
+              <figcaption>Airレジ 支払い画面 / 合計金額の確認</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <div class="switch">
+          <span class="app-badge badge-airregi">Airレジ</span>
+          <span class="arrow">▶</span>
+          <span class="app-badge badge-roselink">RoseLink管理ページ</span>
+          <span>に切り替え</span>
+        </div>
+
+        <article class="step step-roselink">
+          <div class="step-head">
+            <div class="step-num">3</div>
+            <div class="head-text">
+              <span class="app-badge badge-roselink">RoseLink管理ページ</span>
+              <h3>合計金額を入力してQRを発行する</h3>
+            </div>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>店舗iPadでRoseLink管理ページを開きます。</li>
+              <li>QR発行用の画面に進みます。</li>
+              <li>お会計の<strong>合計金額(トータル)</strong>を入力します。</li>
+              <li>金額を確認してからQRを発行します。</li>
+            </ul>
+            <p class="point">必ず<strong>お会計の合計金額</strong>を入力します。</p>
+            <div class="shot-gallery">
+              <figure class="shot">
+                <img src="roselink-assets/admin-amount-2508.png" alt="RoseLink管理ページで合計金額2508円を入力">
+                <figcaption>合計金額を入力</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="roselink-assets/admin-qr-2508.png" alt="RoseLink管理ページで2508円のQRコードを生成">
+                <figcaption>QRコードを生成</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <div class="switch">
+          <span class="app-badge badge-roselink">RoseLink管理ページ</span>
+          <span class="arrow">▶</span>
+          <span class="app-badge badge-customer">RoseLinkアプリ</span>
+          <span>で操作してもらう</span>
+        </div>
+
+        <article class="step step-customer">
+          <div class="step-head">
+            <div class="step-num">4</div>
+            <div class="head-text">
+              <span class="app-badge badge-customer">RoseLinkアプリ</span>
+              <h3>QRを読み取り、Rose利用額を入力してもらう(確定はまだ)</h3>
+            </div>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>表示されたQRをお客様に読み取ってもらいます。</li>
+              <li>お客様側の画面で、今回<strong>Roseで使う金額</strong>を選択してもらいます。</li>
+              <li>一部だけ使う場合は、使用するRose金額を入力してもらいます。</li>
+              <li>入力された<strong>Rose利用額</strong>を確認します。</li>
+            </ul>
+            <p class="point">⚠️ 「ローズ登録を確定」は<strong>まだ押さないで</strong>もらいます。先にAirレジと金額を照合します(次の手順5)。</p>
+            <p class="point">伝票のRose利用額欄に、ここで確認した金額を記入します。</p>
+            <div class="shot-gallery">
+              <figure class="shot">
+                <img src="roselink-assets/customer-home.png" alt="お客様側 ローズ画面">
+                <figcaption>ローズ画面でQRコードを読み取る</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="roselink-assets/customer-no-rose.png" alt="お客様側 ローズを使用しない選択">
+                <figcaption>ローズを使用しない場合</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="roselink-assets/customer-partial-unchecked.png" alt="お客様側 一部のローズを使用 入力後">
+                <figcaption>一部のローズを使用: 金額入力</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <div class="switch">
+          <span class="app-badge badge-customer">RoseLinkアプリ</span>
+          <span class="arrow">▶</span>
+          <span class="app-badge badge-airregi">Airレジ</span>
+          <span>に切り替え(お客様には待ってもらう)</span>
+        </div>
+
+        <article class="step step-airregi">
+          <div class="step-head">
+            <div class="step-num">5</div>
+            <div class="head-text">
+              <span class="app-badge badge-airregi">Airレジ</span>
+              <h3>「Rose」を選択して金額を入力・照合する(会計はまだ)</h3>
+            </div>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>支払い画面で「Rose」を選択し、お客様が入力した<strong>Rose利用額</strong>を入力します。</li>
+              <li>全額Roseの場合は、Rose欄に合計金額を入力します。</li>
+              <li><strong>現金併用</strong>: 残額を現金欄に入力します。</li>
+              <li><strong>クレジット併用</strong>: Rose分を差し引いた残額をクレジットにします。</li>
+              <li>おつりが<strong>0円</strong>になっていることを確認します。</li>
+            </ul>
+            <p class="point">⚠️ 「会計する」は<strong>まだ押しません</strong>。金額が合わない場合は、お客様が確定する前のこの時点で直します。</p>
+            <figure class="shot">
+              <img src="roselink-assets/airregi-rose-full.png" alt="Airレジ Rose508円と現金2000円の入力">
+              <figcaption>Rose 508円 / 現金 2,000円の入力画面</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <div class="double-check">
+          <h3>5番まで終わったら、金額をダブルチェックしてから次へ進みます。</h3>
+        </div>
+
+        <div class="switch">
+          <span class="app-badge badge-airregi">Airレジ</span>
+          <span class="arrow">▶</span>
+          <span class="app-badge badge-customer">RoseLinkアプリ</span>
+          <span>で確定してもらう</span>
+        </div>
+
+        <article class="step step-customer">
+          <div class="step-head">
+            <div class="step-num">6</div>
+            <div class="head-text">
+              <span class="app-badge badge-customer">RoseLinkアプリ</span>
+              <h3>「支払いを完了しました」にチェックして、ローズ登録を確定してもらう</h3>
+            </div>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>金額の照合が終わったら、お客様に「支払いを完了しました」へチェックを入れてもらいます。</li>
+              <li>「ローズ登録を確定」を押してもらいます。</li>
+              <li><strong>ローズ登録完了の画面</strong>を必ず確認します。</li>
+            </ul>
+            <p class="point">⚠️ ローズ登録の確定は<strong>取り消せません</strong>。金額に迷いがある場合は、確定前に責任者へ確認します。</p>
+            <div class="shot-gallery">
+              <figure class="shot">
+                <img src="roselink-assets/customer-partial-checked.png" alt="お客様側 支払い完了チェック後">
+                <figcaption>支払い完了にチェック</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="roselink-assets/customer-complete.png" alt="お客様側 ローズ登録完了">
+                <figcaption>ローズ登録完了(この画面を確認)</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <div class="switch">
+          <span class="app-badge badge-customer">RoseLinkアプリ</span>
+          <span class="arrow">▶</span>
+          <span class="app-badge badge-airregi">Airレジ</span>
+          <span>に戻る</span>
+        </div>
+
+        <article class="step step-airregi">
+          <div class="step-head">
+            <div class="step-num">7</div>
+            <div class="head-text">
+              <span class="app-badge badge-airregi">Airレジ</span>
+              <h3>現金/カードを受け取り、会計を完了する</h3>
+            </div>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li><strong>現金併用</strong>: 残額分の現金を受け取ります。</li>
+              <li><strong>クレジット併用</strong>: Rose分を差し引いた残額をクレジットで決済します。</li>
+              <li>入力内容とおつり<strong>0円</strong>をもう一度確認します。</li>
+              <li>「会計する」を押して完了します。</li>
+            </ul>
+            <figure class="shot">
+              <img src="roselink-assets/airregi-rose-full.png" alt="会計完了前の確認画面 Rose508円 現金2000円">
+              <figcaption>会計完了前の確認画面</figcaption>
+            </figure>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <p class="footer-note">この手順書は、RoseLink管理ページでQRを発行し、AirレジでRose決済として処理する運用を前提にしています。</p>
+  </main>
+</body>
+</html>
