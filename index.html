@@ -586,7 +586,7 @@
         </div>
         <div class="tl-item tl-airregi">
           <span class="app-badge badge-airregi">Airレジ</span>
-          <div class="tl-text">2. 支払いへ進み、合計金額を確認する</div>
+          <div class="tl-text">2. 伝票とAirレジの明細を突合してから、合計金額を確認する</div>
         </div>
         <div class="tl-item tl-roselink">
           <span class="app-badge badge-roselink">RoseLink管理ページ</span>
@@ -629,7 +629,7 @@
             <ul>
               <li>注文入力画面で商品を追加します。</li>
               <li>入力内容に抜けがないか確認します。</li>
-              <li>右側の「支払いへ進む」を押します。</li>
+              <li>この時点では、まだ「支払いへ進む」は押しません。</li>
             </ul>
             <figure class="shot">
               <img src="roselink-assets/airregi-order.png" alt="Airレジ 注文入力画面">
@@ -643,13 +643,16 @@
             <div class="step-num">2</div>
             <div class="head-text">
               <span class="app-badge badge-airregi">Airレジ</span>
-              <h3>お会計の合計金額を確認する</h3>
+              <h3>伝票とAirレジの明細を突合してから、合計金額を確認する</h3>
             </div>
           </div>
           <div class="step-body">
             <ul>
+              <li>伝票の商品・数量・割増・割引などが、Airレジの入力内容と合っているか確認します。</li>
+              <li>伝票との突合が終わったら、右側の「支払いへ進む」を押します。</li>
               <li>支払い画面で、お会計の<strong>合計金額</strong>を確認します。</li>
             </ul>
+            <p class="point">先に支払い画面へ進むと伝票との突合がしづらいため、明細確認を終えてから支払いへ進みます。</p>
             <figure class="shot">
               <img src="roselink-assets/airregi-total-cash-2508.png" alt="Airレジ 支払い画面 合計2508円">
               <figcaption>Airレジ 支払い画面 / 合計金額の確認</figcaption>
