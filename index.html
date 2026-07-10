@@ -539,7 +539,7 @@
     <header>
       <div class="eyebrow">店舗iPad用マニュアル</div>
       <h1>RoseLink会計手順書</h1>
-      <p class="lead">Rose支払いのお会計は、<strong>Airレジ・RoseLink管理ページ・RoseLinkアプリ</strong>の3つの画面を行き来します。今どの画面を操作しているかは、各手順の色バッジで確認できます。<br>ローズ登録の確定は取り消せないため、<strong>確定してもらう前にAirレジへの入力まで済ませて金額を照合</strong>し、現金やカードの受け渡しは確定のあとに行います。</p>
+      <p class="lead">Rose支払いのお会計は、<strong>Airレジ・RoseLink管理ページ・RoseLinkアプリ</strong>の3つの画面を行き来します。今どの画面を操作しているかは、各手順の色バッジで確認できます。<br>ローズ登録の確定は取り消せないため、<strong>確定してもらう前にAirレジへRose利用額と残額を入力して照合し、残額の現金受領・カード決済まで完了</strong>します。ローズ登録の完了画面を確認してから、最後にAirレジの「会計する」を押します。</p>
     </header>
 
     <nav class="toc">
@@ -578,7 +578,7 @@
 
     <section id="overview">
       <h2>全体の流れ</h2>
-      <p class="section-sub">7ステップ。色が変わるところで画面をきりかえます。</p>
+      <p class="section-sub">8ステップ。色が変わるところで画面をきりかえます。</p>
       <div class="timeline">
         <div class="tl-item tl-airregi">
           <span class="app-badge badge-airregi">Airレジ</span>
@@ -586,7 +586,7 @@
         </div>
         <div class="tl-item tl-airregi">
           <span class="app-badge badge-airregi">Airレジ</span>
-          <div class="tl-text">2. 伝票とAirレジの明細を突合してから、合計金額を確認する</div>
+          <div class="tl-text">2. 伝票と明細を突合し、画面左下の合計金額を確認する<br>(支払いへはまだ進まない)</div>
         </div>
         <div class="tl-item tl-roselink">
           <span class="app-badge badge-roselink">RoseLink管理ページ</span>
@@ -598,19 +598,23 @@
         </div>
         <div class="tl-item tl-airregi">
           <span class="app-badge badge-airregi">Airレジ</span>
-          <div class="tl-text">5. Rose利用額と残額を入力し、ダブルチェックする<br>(会計はまだ)</div>
-        </div>
-        <div class="tl-item tl-customer">
-          <span class="app-badge badge-customer">RoseLinkアプリ</span>
-          <div class="tl-text">6. 「支払いを完了しました」にチェックして、ローズ登録を確定してもらう</div>
+          <div class="tl-text">5. 支払いへ進み、Rose利用額と残額を入力・照合する<br>(会計はまだ)</div>
         </div>
         <div class="tl-item tl-airregi">
           <span class="app-badge badge-airregi">Airレジ</span>
-          <div class="tl-text">7. 現金/カードを受け取り、「会計する」で完了</div>
+          <div class="tl-text">6. 残額の現金受領・カード決済を完了する<br>(「会計する」はまだ)</div>
+        </div>
+        <div class="tl-item tl-customer">
+          <span class="app-badge badge-customer">RoseLinkアプリ</span>
+          <div class="tl-text">7. 「支払いを完了しました」にチェックして、ローズ登録を確定してもらう</div>
+        </div>
+        <div class="tl-item tl-airregi">
+          <span class="app-badge badge-airregi">Airレジ</span>
+          <div class="tl-text">8. 最後に「会計する」を押して完了</div>
         </div>
       </div>
-      <p class="notice danger">ローズ登録の確定は<strong>取り消せません</strong>。確定してもらうのは、Airレジとの金額照合(手順5)が終わってからです。</p>
-      <p class="notice ok">クレジット併用の場合も、Rose分を差し引いた残額をクレジットで会計して問題ありません。</p>
+      <p class="notice danger">ローズ登録の確定は<strong>取り消せません</strong>。確定してもらうのは、Airレジとの金額照合(手順5)と残額の決済(手順6)が終わってからです。</p>
+      <p class="notice ok">クレジット併用の場合は、Rose分を差し引いた残額のカード決済まで完了してからローズ登録を確定します。Airレジの「会計する」は、そのあとに押します。</p>
     </section>
 
     <section id="steps">
@@ -643,19 +647,20 @@
             <div class="step-num">2</div>
             <div class="head-text">
               <span class="app-badge badge-airregi">Airレジ</span>
-              <h3>伝票とAirレジの明細を突合してから、合計金額を確認する</h3>
+              <h3>伝票と明細を突合し、画面左下の合計金額を確認する</h3>
             </div>
           </div>
           <div class="step-body">
             <ul>
               <li>伝票の商品・数量・割増・割引などが、Airレジの入力内容と合っているか確認します。</li>
-              <li>伝票との突合が終わったら、右側の「支払いへ進む」を押します。</li>
-              <li>支払い画面で、お会計の<strong>合計金額</strong>を確認します。</li>
+              <li>突合が終わったら、注文入力画面の<strong>左下に表示されている合計金額</strong>を確認します。</li>
+              <li>この例では、左下の合計金額は<strong>2,508円</strong>です。</li>
+              <li>この時点では、まだ右側の「支払いへ進む」は押しません。</li>
             </ul>
-            <p class="point">先に支払い画面へ進むと伝票との突合がしづらいため、明細確認を終えてから支払いへ進みます。</p>
+            <p class="point">⚠️ 支払い画面へ進むと伝票との突合ができないため、明細と合計金額の確認は必ず注文入力画面で行います。</p>
             <figure class="shot">
-              <img src="roselink-assets/airregi-total-cash-2508.png" alt="Airレジ 支払い画面 合計2508円">
-              <figcaption>Airレジ 支払い画面 / 合計金額の確認</figcaption>
+              <img src="roselink-assets/airregi-order.png" alt="Airレジ 注文入力画面 左下に合計2508円">
+              <figcaption>画面左下の合計金額を確認(この例は2,508円)</figcaption>
             </figure>
           </div>
         </article>
@@ -679,10 +684,10 @@
             <ul>
               <li>店舗iPadでRoseLink管理ページを開きます。</li>
               <li>QR発行用の画面に進みます。</li>
-              <li>お会計の<strong>合計金額(トータル)</strong>を入力します。</li>
+              <li>手順2でAirレジの注文入力画面左下に表示されていた<strong>合計金額(トータル)</strong>を入力します。</li>
               <li>金額を確認してからQRを発行します。</li>
             </ul>
-            <p class="point">必ず<strong>お会計の合計金額</strong>を入力します。</p>
+            <p class="point">必ず<strong>Airレジの注文入力画面左下で確認した合計金額</strong>を入力します。支払い画面の金額を確認する手順ではありません。</p>
             <div class="shot-gallery">
               <figure class="shot">
                 <img src="roselink-assets/admin-amount-2508.png" alt="RoseLink管理ページで合計金額2508円を入力">
@@ -716,10 +721,10 @@
               <li>表示されたQRをお客様に読み取ってもらいます。</li>
               <li>お客様側の画面で、今回<strong>Roseで使う金額</strong>を選択してもらいます。</li>
               <li>一部だけ使う場合は、使用するRose金額を入力してもらいます。</li>
-              <li>入力された<strong>Rose利用額</strong>を確認します。</li>
+              <li>入力後の画面を店舗スタッフに見せてもらい、<strong>Rose利用額</strong>と<strong>お支払い金額(残額)</strong>を確認します。</li>
             </ul>
             <p class="point">⚠️ 「ローズ登録を確定」は<strong>まだ押さないで</strong>もらいます。先にAirレジと金額を照合します(次の手順5)。</p>
-            <p class="point">伝票のRose利用額欄に、ここで確認した金額を記入します。</p>
+            <p class="point">伝票のRose利用額欄に、ここで確認した金額を記入します。お客様には、この画面のまま待ってもらいます。</p>
             <div class="shot-gallery">
               <figure class="shot">
                 <img src="roselink-assets/customer-home.png" alt="お客様側 ローズ画面">
@@ -749,28 +754,54 @@
             <div class="step-num">5</div>
             <div class="head-text">
               <span class="app-badge badge-airregi">Airレジ</span>
-              <h3>「Rose」を選択して金額を入力・照合する(会計はまだ)</h3>
+              <h3>支払いへ進み、「Rose」と残額を入力・照合する(会計はまだ)</h3>
             </div>
           </div>
           <div class="step-body">
             <ul>
-              <li>支払い画面で「Rose」を選択し、お客様が入力した<strong>Rose利用額</strong>を入力します。</li>
+              <li>ここで初めて、右側の「支払いへ進む」を押します。</li>
+              <li>支払い画面で「Rose」を選択し、お客様の画面に表示された<strong>Rose利用額</strong>を入力します。</li>
               <li>全額Roseの場合は、Rose欄に合計金額を入力します。</li>
-              <li><strong>現金併用</strong>: 残額を現金欄に入力します。</li>
-              <li><strong>クレジット併用</strong>: Rose分を差し引いた残額をクレジットにします。</li>
-              <li>おつりが<strong>0円</strong>になっていることを確認します。</li>
+              <li><strong>現金併用</strong>: お客様の画面に表示された「お支払い金額」を現金欄に入力します。</li>
+              <li><strong>クレジット併用</strong>: お客様の画面に表示された「お支払い金額」をクレジット欄に入力します。</li>
+              <li>Rose利用額と残額の合計が会計金額と一致し、おつりが<strong>0円</strong>になっていることを確認します。</li>
             </ul>
-            <p class="point">⚠️ 「会計する」は<strong>まだ押しません</strong>。金額が合わない場合は、お客様が確定する前のこの時点で直します。</p>
-            <figure class="shot">
-              <img src="roselink-assets/airregi-rose-full.png" alt="Airレジ Rose508円と現金2000円の入力">
-              <figcaption>Rose 508円 / 現金 2,000円の入力画面</figcaption>
-            </figure>
+            <p class="point">⚠️ おつり0円は<strong>入力金額が一致していることの確認</strong>であり、決済完了ではありません。「会計する」はまだ押しません。</p>
+            <div class="shot-gallery">
+              <figure class="shot">
+                <img src="roselink-assets/airregi-rose-select.png" alt="AirレジでRose508円を入力">
+                <figcaption>お客様の画面と同じRose額を入力</figcaption>
+              </figure>
+              <figure class="shot">
+                <img src="roselink-assets/airregi-rose-full.png" alt="Airレジ Rose508円と現金2000円の入力">
+                <figcaption>Rose 508円 / 残額2,000円 / おつり0円を確認</figcaption>
+              </figure>
+            </div>
           </div>
         </article>
 
         <div class="double-check">
-          <h3>5番まで終わったら、金額をダブルチェックしてから次へ進みます。</h3>
+          <h3>5番まで終わったら、3つの金額をダブルチェックします。</h3>
+          <p>Airレジの合計金額 ＝ お客様画面のRose利用額 ＋ お客様画面のお支払い金額</p>
         </div>
+
+        <article class="step step-airregi">
+          <div class="step-head">
+            <div class="step-num">6</div>
+            <div class="head-text">
+              <span class="app-badge badge-airregi">Airレジ</span>
+              <h3>残額の現金受領・カード決済を完了する</h3>
+            </div>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li><strong>現金併用</strong>: お客様画面の「お支払い金額」と同額の現金を受け取ります。</li>
+              <li><strong>クレジット併用</strong>: お客様画面の「お支払い金額」と同額のカード決済を行い、決済完了まで確認します。</li>
+              <li>残額の決済が完了しても、Airレジの「会計する」はまだ押しません。</li>
+            </ul>
+            <p class="point">残額の決済完了を確認してから、お客様にRoseの確定操作をしてもらいます。</p>
+          </div>
+        </article>
 
         <div class="switch">
           <span class="app-badge badge-airregi">Airレジ</span>
@@ -781,7 +812,7 @@
 
         <article class="step step-customer">
           <div class="step-head">
-            <div class="step-num">6</div>
+            <div class="step-num">7</div>
             <div class="head-text">
               <span class="app-badge badge-customer">RoseLinkアプリ</span>
               <h3>「支払いを完了しました」にチェックして、ローズ登録を確定してもらう</h3>
@@ -789,7 +820,7 @@
           </div>
           <div class="step-body">
             <ul>
-              <li>金額の照合が終わったら、お客様に「支払いを完了しました」へチェックを入れてもらいます。</li>
+              <li>残額の現金受領・カード決済まで完了したら、お客様に「支払いを完了しました」へチェックを入れてもらいます。</li>
               <li>「ローズ登録を確定」を押してもらいます。</li>
               <li><strong>ローズ登録完了の画面</strong>を必ず確認します。</li>
             </ul>
@@ -816,17 +847,16 @@
 
         <article class="step step-airregi">
           <div class="step-head">
-            <div class="step-num">7</div>
+            <div class="step-num">8</div>
             <div class="head-text">
               <span class="app-badge badge-airregi">Airレジ</span>
-              <h3>現金/カードを受け取り、会計を完了する</h3>
+              <h3>最後に「会計する」を押してAirレジの会計を完了する</h3>
             </div>
           </div>
           <div class="step-body">
             <ul>
-              <li><strong>現金併用</strong>: 残額分の現金を受け取ります。</li>
-              <li><strong>クレジット併用</strong>: Rose分を差し引いた残額をクレジットで決済します。</li>
-              <li>入力内容とおつり<strong>0円</strong>をもう一度確認します。</li>
+              <li>お客様の<strong>ローズ登録完了画面</strong>を確認します。</li>
+              <li>AirレジのRose利用額・残額・おつり<strong>0円</strong>をもう一度確認します。</li>
               <li>「会計する」を押して完了します。</li>
             </ul>
             <figure class="shot">
